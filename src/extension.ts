@@ -4,21 +4,22 @@ import * as vscode from 'vscode';
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-    console.log('Debug message');
+    let currentRepo = vscode.workspace.name;
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('autocommit.helloWorld', () => {
-        vscode.window.showInformationMessage('Hello World from autocommit!');
-    });
+    // TODO - if in Devcontainer there'll be some exta crap that needs trimming.
+    let enabledRepoList = [
+        undefined, // How it currently turns up in the debug view
+        "vscode-autocommit",
+        "beacon"
+    ];
 
-    let test = vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-        let currentRepo = vscode.workspace.name;
-        vscode.window.showInformationMessage(`Current workspace: ${currentRepo}`);
-    });
+    let isEnabled = enabledRepoList.some(repo => repo === currentRepo);
 
-    context.subscriptions.push(disposable);
+    if (isEnabled) {
+        vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
+            vscode.window.showInformationMessage(`Current workspace: ${currentRepo}`);
+        });
+    }
 }
 
 // This method is called when your extension is deactivated
