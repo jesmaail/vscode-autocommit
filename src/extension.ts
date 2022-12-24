@@ -1,8 +1,14 @@
 import * as vscode from 'vscode';
+import configuration from './configuration';
 import { debugPrint, getWorkspaceName } from './utils';
 
 export function activate(context: vscode.ExtensionContext) {
+    let config = configuration;
     let currentRepo = getWorkspaceName();
+
+    if (config.mode === "OnTimer") {
+        vscode.window.showErrorMessage("autocommit: OnTimer mode not yet supported, defaulting to OnSave.");
+    }
 
     let enabledRepoList = [
         undefined, // How it currently turns up in the debug view
