@@ -1,12 +1,11 @@
 import * as vscode from 'vscode';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    let currentRepoRaw = vscode.workspace.name;
 
-    let currentRepo = vscode.workspace.name;
+    // Trims any extra text from Remote Dev Container
+    let currentRepo = currentRepoRaw?.split('[')[0].trim();
 
-    // TODO - if in Devcontainer there'll be some exta crap that needs trimming.
     let enabledRepoList = [
         undefined, // How it currently turns up in the debug view
         "vscode-autocommit",
@@ -15,11 +14,17 @@ export function activate(context: vscode.ExtensionContext) {
 
     let isEnabled = enabledRepoList.some(repo => repo === currentRepo);
 
+    debugPrint(`isEnabled: ${isEnabled}`);
+
     if (isEnabled) {
         vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-            vscode.window.showInformationMessage(`Current workspace: ${currentRepo}`);
+            debugPrint(`Current workspace: ${currentRepo}`);
         });
     }
+}
+
+function debugPrint(message: string) {
+    vscode.window.showInformationMessage(message)
 }
 
 // This method is called when your extension is deactivated
