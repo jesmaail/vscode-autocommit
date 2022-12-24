@@ -10,13 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showErrorMessage("autocommit: OnTimer mode not yet supported, defaulting to OnSave.");
     }
 
-    let enabledRepoList = [
-        undefined, // How it currently turns up in the debug view
-        "vscode-autocommit",
-        "beacon"
-    ];
-
-    let isEnabled = enabledRepoList.some(repo => repo === currentRepo);
+    let isEnabled = config.enabledList.some(repo => repo === currentRepo);
 
     debugPrint(`isEnabled: ${isEnabled}`);
 
