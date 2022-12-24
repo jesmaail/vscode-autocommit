@@ -19,16 +19,7 @@
     ],
     "main": "./dist/extension.js",
     "contributes": {
-        "commands": [
-            {
-                "command": "autocommit.helloWorld",
-                "title": "Hello World"
-            },
-            {
-                "command": "autocommit.something",
-                "title": "Something"
-            }
-        ]
+        "commands": []
     },
     "scripts": {
         "vscode:prepublish": "npm run package",
