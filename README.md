@@ -5,6 +5,10 @@ Autocommit will auto commit to git based on config settings (on save, every x mi
 ## Resources
 - [How to publish an extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
 
+## Testing locally without the debugger
+>`vsce package`
+>`code --install-extension autocommit-0.0.1.vsix` (subject to change)
+
 ## Features
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
