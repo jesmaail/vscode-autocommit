@@ -1,11 +1,8 @@
 import * as vscode from 'vscode';
-import { debugPrint } from './utils';
+import { debugPrint, getWorkspaceName } from './utils';
 
 export function activate(context: vscode.ExtensionContext) {
-    let currentRepoRaw = vscode.workspace.name;
-
-    // Trims any extra text from Remote Dev Container
-    let currentRepo = currentRepoRaw?.split('[')[0].trim();
+    let currentRepo = getWorkspaceName();
 
     let enabledRepoList = [
         undefined, // How it currently turns up in the debug view
