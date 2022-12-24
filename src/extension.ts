@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { debugPrint } from './utils';
 
 export function activate(context: vscode.ExtensionContext) {
     let currentRepoRaw = vscode.workspace.name;
@@ -21,10 +22,6 @@ export function activate(context: vscode.ExtensionContext) {
             debugPrint(`Current workspace: ${currentRepo}`);
         });
     }
-}
-
-function debugPrint(message: string) {
-    vscode.window.showInformationMessage(message)
 }
 
 // This method is called when your extension is deactivated
