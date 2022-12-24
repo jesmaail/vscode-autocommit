@@ -1,8 +1,13 @@
 {
     "name": "autocommit",
     "displayName": "autocommit",
+    "publisher": "jesmaail",
     "description": "",
     "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jesmaail/vscode-autocommit"
+    },
     "engines": {
         "vscode": "^1.74.0"
     },
