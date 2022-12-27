@@ -2,93 +2,78 @@
 
 Autocommit will auto commit to git based on config settings (on save, every x minutes, certain workspaces/repos)
 
-Current only supports on save.
+__Current only supports on save.__
 
-## TODO
-- Clean up README
-    - Move some notes from here and the getting-started branch to note repo
-- Clean up code
-- Add something to the lower status bar to signify if enabled.
-- More customisable commit messages
-
-## Resources
-- [How to publish an extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
-
-## Testing locally without the debugger
->`vsce package`
->`code --install-extension autocommit-0.0.1.vsix` (subject to change)
+---
 
 ## Features
+Allows for commit and push on save of documents for any repositories specifed in the `enabledList`.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Example usecase: Using VSCode for markdown note taking with git as a store.
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
+---
 
 ## Requirements
 
-- N/A
+- VSCode git extension is enabled.
+
+---
 
 ## Extension Settings
+```json
+"autocommit": {
+    "mode": "OnSave", // OnTimer not yet supported
+    "enabledList": [
+        "your-repo-name",
+        "another-repo"
+    ]
+    "debugMode": true //Optional incase you need to troubleshoot
+}
+```
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+----
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Probably a lot, still in a very much prepreprerelease state and very much only intended for my personal use.
 
+- Some repositories aren't immediately detected in the GitAPI in VS Code, enabling `debugMode` and seeing repository count of `0` confirms this.
+    - Solution: Make a manual commit and push within VSCode and restart VSCode to jumpstart it.
+
+---
 ## Release Notes
-
-Users appreciate release notes as you update your extension.
 
 ### 0.0.1
 
-Test release of autocommit
-
+Initial (pre)release of autocommit with commit and push on save.
 
 ---
+---
+
+# Development notes
+
+## Testing locally without the debugger
+>`vsce package`
+
+>`code --install-extension autocommit-0.0.1.vsix` (subject to change)
+
+TODO - Look into how to get debugger working again since added the git definition file
+
+---
+## TODO
+- Clean up code
+- Custom defined git profiles rather than default
+- Add something to the lower status bar to signify if enabled.
+- More customisable commit messages
+- `undefined` comes up when on main branch
+- Ability to enable/diable repo (gets auto added/removed from config)
+- Publish via github actions
+    - [How to publish an extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
+
+--- 
 
 ## Following extension guidelines
 
 Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
 
 * [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-# Boilerplate code that comes preloaded
-```typescript
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
-
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "autocommit" is now active!');
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('autocommit.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from autocommit!');
-	});
-
-	context.subscriptions.push(disposable);
-}
-
-// This method is called when your extension is deactivated
-export function deactivate() {}
-
-```
