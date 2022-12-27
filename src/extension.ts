@@ -1,7 +1,8 @@
+import { ReadableByteStreamController } from 'stream/web';
 import * as vscode from 'vscode';
 import configuration from './configuration';
 import { getGitApi } from "./git";
-import { debugPrint, getGitRepoName } from './utils';
+import { debugPrint, getGitRepoName, addCommitPushFile } from './utils';
 
 export async function activate(context: vscode.ExtensionContext) {
     const git = await getGitApi();
@@ -18,9 +19,12 @@ export async function activate(context: vscode.ExtensionContext) {
     let repository = git.repositories[0];
 
     let config = configuration;
+
     let currentRepo = getGitRepoName(repository);
+
     let currentBranch = repository.state.HEAD?.name;
-    debugPrint("currentBranch")
+
+    debugPrint(`Current Branch: ${currentBranch}`);
 
     if (config.mode === "OnTimer") {
         vscode.window.showErrorMessage("autocommit: OnTimer mode not yet supported, defaulting to OnSave.");
@@ -32,9 +36,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     if (isEnabled) {
         vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-            // repository.add([document.fileName]); // Only want to add the current file (OnSave Mode)
-            // repository.commit("Adding automated commit and testing it now with working push");
-            // repository.push(undefined, currentBranch);
+            addCommitPushFile(document, repository, currentBranch);
         });
     }
 }
