@@ -1,8 +1,7 @@
-import { ReadableByteStreamController } from 'stream/web';
 import * as vscode from 'vscode';
 import configuration from './configuration';
 import { getGitApi } from "./git";
-import { debugPrint, getGitRepoName, commitFile, pushToGit } from './utils';
+import { getGitRepoName, commitFile, pushToGit } from './utils';
 
 export async function activate(context: vscode.ExtensionContext) {
     const git = await getGitApi();
@@ -12,7 +11,7 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     if (git.repositories.length === 0) {
-        debugPrint("autocommit: Current workspace is not a git repository.");
+        vscode.window.showErrorMessage("autocommit: Current workspace is not a git repository.");
         return;
     }
 
@@ -24,20 +23,21 @@ export async function activate(context: vscode.ExtensionContext) {
 
     let currentBranch = repository.state.HEAD?.name;
 
-    debugPrint(`Current Branch: ${currentBranch}`);
-
     if (config.mode === "OnTimer") {
         vscode.window.showErrorMessage("autocommit: OnTimer mode not yet supported, defaulting to OnSave.");
     }
 
     let isEnabled = config.enabledList.some(repo => repo === currentRepo);
 
-    debugPrint(`isEnabled: ${isEnabled}`);
+    // TODO - Check how this works with workspace changes, multiple windows, etc.
+    // - Could do another init-like check for enabled on a onDidChangeWorkspace(?) event.
 
     if (isEnabled) {
         vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
             let message = "Getting commit and push working at same time...";
+
             await commitFile(document, repository, message);
+
             await pushToGit(repository, currentBranch);
         });
     }
