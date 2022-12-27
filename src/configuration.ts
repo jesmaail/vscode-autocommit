@@ -19,5 +19,9 @@ export default {
 
     get commitMessage(): string {
         return configuration().get("commitMessage", DEFAULT_COMMIT_MESSAGE);
+    },
+
+    get debugMode(): boolean {
+        return configuration().get("debugMode", false);
     }
 };
