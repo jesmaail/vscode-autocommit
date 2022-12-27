@@ -1,14 +1,29 @@
 import path = require('path');
 import * as vscode from 'vscode';
-import { Repository } from "./git";
+import { Repository, GitExtension } from '../typings/git';
+
 
 export function debugPrint(message: string) {
     vscode.window.showInformationMessage(message);
 }
 
 // TODO - Will want these in a git utils file
+export async function getGitApi() {
+    let gitExtension = vscode.extensions.getExtension("vscode.git");
+
+    if (!gitExtension) {
+        return;
+    }
+
+    if (!gitExtension.isActive) {
+        await gitExtension.activate();
+    }
+
+    return gitExtension.exports.getAPI(1);
+}
+
 export function getGitRepoName(repository: Repository) {
-    let repoPath = vscode.Uri.parse(repository.rootUri).fsPath;
+    let repoPath = vscode.Uri.parse(repository.rootUri.fsPath).fsPath;
 
     // Get the name of the repository
     let name = path.basename(repoPath);
@@ -21,11 +36,11 @@ export async function commitFile(document: vscode.TextDocument, repository: Repo
     await repository.add([document.fileName]); // Only want to add the current file (OnSave Mode)
     await repository.commit(message);
 
-    vscode.window.showErrorMessage("autocommit: Committed.");
+    vscode.window.showInformationMessage("autocommit: Committed.");
 }
 
 export async function pushToGit(repository: Repository, currentBranch: string | undefined) {
     await repository.push("origin", currentBranch);
 
-    vscode.window.showErrorMessage(`autocommit: Pushed to ${currentBranch}.`);
+    vscode.window.showInformationMessage(`autocommit: Pushed to ${currentBranch}.`);
 }

@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import configuration from './configuration';
-import { getGitApi } from "./git";
-import { getGitRepoName, commitFile, pushToGit } from './utils';
+import { getGitApi, getGitRepoName, commitFile, pushToGit } from './utils';
 
 export async function activate(context: vscode.ExtensionContext) {
     const git = await getGitApi();
