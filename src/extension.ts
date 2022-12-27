@@ -32,9 +32,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
     if (isEnabled) {
         vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-            repository.add([document.fileName]); // Only want to add the current file (OnSave Mode)
-            repository.commit("Adding automated commit and testing it now with working push");
-            repository.push(undefined, currentBranch);
+            // repository.add([document.fileName]); // Only want to add the current file (OnSave Mode)
+            // repository.commit("Adding automated commit and testing it now with working push");
+            // repository.push(undefined, currentBranch);
         });
     }
 }
