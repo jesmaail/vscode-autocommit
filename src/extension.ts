@@ -2,7 +2,7 @@ import { ReadableByteStreamController } from 'stream/web';
 import * as vscode from 'vscode';
 import configuration from './configuration';
 import { getGitApi } from "./git";
-import { debugPrint, getGitRepoName, addCommitPushFile } from './utils';
+import { debugPrint, getGitRepoName, commitFile, pushToGit } from './utils';
 
 export async function activate(context: vscode.ExtensionContext) {
     const git = await getGitApi();
@@ -36,7 +36,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
     if (isEnabled) {
         vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-            addCommitPushFile(document, repository, currentBranch);
+            let message = "Getting commit and push working at same time...";
+            commitFile(document, repository, message);
+            pushToGit(repository, currentBranch);
         });
     }
 }
