@@ -1,13 +1,12 @@
 import path = require('path');
 import * as vscode from 'vscode';
-import { GitAPI } from "./git";
+import { Repository } from "./git";
 
 export function debugPrint(message: string) {
     vscode.window.showInformationMessage(message)
 }
 
-export function getGitRepoName(gitApi: GitAPI) {
-    let repository = gitApi.repositories[0];
+export function getGitRepoName(repository: Repository) {
     let repoPath = vscode.Uri.parse(repository.rootUri).fsPath;
 
     // Get the name of the repository

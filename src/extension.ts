@@ -12,12 +12,14 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     if (git.repositories.length === 0) {
-        debugPrint("autocommit: Current workspace is not a git repository.")
+        debugPrint("autocommit: Current workspace is not a git repository.");
         return;
     }
 
+    let repository = git.repositories[0];
+
     let config = configuration;
-    let currentRepo = getGitRepoName(git);
+    let currentRepo = getGitRepoName(repository);
 
     if (config.mode === "OnTimer") {
         vscode.window.showErrorMessage("autocommit: OnTimer mode not yet supported, defaulting to OnSave.");
