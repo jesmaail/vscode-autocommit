@@ -8,8 +8,6 @@ Current only supports on save.
 - Clean up README
     - Move some notes from here and the getting-started branch to note repo
 - Clean up code
-- Replace git.ts with the provided interface from vscode git extension
-    - https://github.com/microsoft/vscode/blob/main/extensions/git/src/api/git.d.ts
 - Add something to the lower status bar to signify if enabled.
 
 ## Resources
