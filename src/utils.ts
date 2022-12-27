@@ -1,11 +1,6 @@
 import path = require('path');
 import * as vscode from 'vscode';
-import { Repository, GitExtension } from '../typings/git';
-
-
-export function debugPrint(message: string) {
-    vscode.window.showInformationMessage(message);
-}
+import { Repository } from '../typings/git';
 
 // TODO - Will want these in a git utils file
 export async function getGitApi() {
@@ -27,7 +22,6 @@ export function getGitRepoName(repository: Repository) {
 
     // Get the name of the repository
     let name = path.basename(repoPath);
-    debugPrint(`repo name is ${name}`);
 
     return name;
 }
