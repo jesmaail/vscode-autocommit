@@ -16,8 +16,11 @@ export function getGitRepoName(repository: Repository) {
     return name;
 }
 
-export async function addCommitPushFile(document: vscode.TextDocument, repository: Repository, currentBranch: string | undefined) {
+export async function commitFile(document: vscode.TextDocument, repository: Repository, message: string) {
     await repository.add([document.fileName]); // Only want to add the current file (OnSave Mode)
-    await repository.commit("Adding automated commit and testing it now with working push");
+    await repository.commit(message);
+}
+
+export async function pushToGit(repository: Repository, currentBranch: string | undefined) {
     await repository.push("origin", currentBranch);
 }
