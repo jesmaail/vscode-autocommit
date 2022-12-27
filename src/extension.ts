@@ -35,10 +35,10 @@ export async function activate(context: vscode.ExtensionContext) {
     debugPrint(`isEnabled: ${isEnabled}`);
 
     if (isEnabled) {
-        vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
+        vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
             let message = "Getting commit and push working at same time...";
-            commitFile(document, repository, message);
-            pushToGit(repository, currentBranch);
+            await commitFile(document, repository, message);
+            await pushToGit(repository, currentBranch);
         });
     }
 }
