@@ -9,6 +9,7 @@ Current only supports on save.
     - Move some notes from here and the getting-started branch to note repo
 - Clean up code
 - Add something to the lower status bar to signify if enabled.
+- More customisable commit messages
 
 ## Resources
 - [How to publish an extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
