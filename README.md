@@ -10,6 +10,7 @@ Current only supports on save.
 - Clean up code
 - Replace git.ts with the provided interface from vscode git extension
     - https://github.com/microsoft/vscode/blob/main/extensions/git/src/api/git.d.ts
+- Add something to the lower status bar to signify if enabled.
 
 ## Resources
 - [How to publish an extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
