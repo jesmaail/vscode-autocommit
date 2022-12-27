@@ -16,24 +16,22 @@ export async function activate(context: vscode.ExtensionContext) {
 
     let repository = git.repositories[0];
 
-    let config = configuration;
-
     let currentRepo = getGitRepoName(repository);
 
     let currentBranch = repository.state.HEAD?.name;
 
-    if (config.mode === "OnTimer") {
+    if (configuration.mode === "OnTimer") {
         vscode.window.showErrorMessage("autocommit: OnTimer mode not yet supported, defaulting to OnSave.");
     }
 
-    let isEnabled = config.enabledList.some(repo => repo === currentRepo);
+    let isEnabled = configuration.enabledList.some(repo => repo === currentRepo);
 
     // TODO - Check how this works with workspace changes, multiple windows, etc.
     // - Could do another init-like check for enabled on a onDidChangeWorkspace(?) event.
 
     if (isEnabled) {
         vscode.workspace.onDidSaveTextDocument(async (document: vscode.TextDocument) => {
-            await commitFile(document, repository, config.commitMessage);
+            await commitFile(document, repository, configuration.commitMessage);
             await pushToGit(repository, currentBranch);
         });
     }
