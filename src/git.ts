@@ -44,6 +44,8 @@ export interface Repository {
         forcePush?: ForcePushMode
     ): Promise<void>;
 
+    add(paths: string[]): Promise<void>;
+
     commit(message: string, opts?: CommitOptions): Promise<void>;
 }
 
