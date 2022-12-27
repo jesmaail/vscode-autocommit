@@ -1,10 +1,23 @@
 import * as vscode from 'vscode';
 import configuration from './configuration';
-import { debugPrint, getWorkspaceName } from './utils';
+import { getGitApi, GitAPI } from "./git";
+import { debugPrint, getGitRepoName } from './utils';
+const path = require('path');
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
+    const git = await getGitApi();
+
+    if (!git) {
+        return; // Something wrong with the git extension
+    }
+
+    if (git.repositories.length === 0) {
+        debugPrint("autocommit: Current workspace is not a git repository.")
+        return;
+    }
+
     let config = configuration;
-    let currentRepo = getWorkspaceName();
+    let currentRepo = getGitRepoName(git);
 
     if (config.mode === "OnTimer") {
         vscode.window.showErrorMessage("autocommit: OnTimer mode not yet supported, defaulting to OnSave.");
@@ -21,5 +34,4 @@ export function activate(context: vscode.ExtensionContext) {
     }
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() { }
