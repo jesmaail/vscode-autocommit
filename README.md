@@ -2,6 +2,8 @@
 
 Autocommit will auto commit to git based on config settings (on save, every x minutes, certain workspaces/repos)
 
+Current only supports on save.
+
 ## Resources
 - [How to publish an extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
 
