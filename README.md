@@ -4,6 +4,13 @@ Autocommit will auto commit to git based on config settings (on save, every x mi
 
 Current only supports on save.
 
+## TODO
+- Clean up README
+    - Move some notes from here and the getting-started branch to note repo
+- Clean up code
+- Replace git.ts with the provided interface from vscode git extension
+    - https://github.com/microsoft/vscode/blob/main/extensions/git/src/api/git.d.ts
+
 ## Resources
 - [How to publish an extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
 
