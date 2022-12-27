@@ -20,6 +20,7 @@ export async function activate(context: vscode.ExtensionContext) {
     let config = configuration;
     let currentRepo = getGitRepoName(repository);
     let currentBranch = repository.state.HEAD?.name;
+    debugPrint("currentBranch")
 
     if (config.mode === "OnTimer") {
         vscode.window.showErrorMessage("autocommit: OnTimer mode not yet supported, defaulting to OnSave.");
