@@ -2,7 +2,6 @@ import path = require('path');
 import * as vscode from 'vscode';
 import { Repository } from '../typings/git';
 
-// TODO - Will want these in a git utils file
 export async function getGitApi() {
     let gitExtension = vscode.extensions.getExtension("vscode.git");
 
@@ -19,11 +18,7 @@ export async function getGitApi() {
 
 export function getGitRepoName(repository: Repository) {
     let repoPath = vscode.Uri.parse(repository.rootUri.fsPath).fsPath;
-
-    // Get the name of the repository
-    let name = path.basename(repoPath);
-
-    return name;
+    return path.basename(repoPath);
 }
 
 export async function commitFile(document: vscode.TextDocument, repository: Repository, message: string) {
