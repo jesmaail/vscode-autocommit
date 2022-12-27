@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
 import configuration from './configuration';
-import { getGitApi, GitAPI } from "./git";
+import { getGitApi } from "./git";
 import { debugPrint, getGitRepoName } from './utils';
-const path = require('path');
 
 export async function activate(context: vscode.ExtensionContext) {
     const git = await getGitApi();
@@ -31,7 +30,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
     if (isEnabled) {
         vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
-            debugPrint(`Current workspace: ${currentRepo}`);
+            repository.add([document.fileName]); // Only want to add the current file (OnSave Mode)
+            repository.commit("Adding automated commit and testing it");
+            repository.push();
         });
     }
 }
